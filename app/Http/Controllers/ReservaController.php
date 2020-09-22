@@ -12,7 +12,7 @@ class ReservaController extends Controller
     public function index(){
         $restaurantes = Restaurante::all();
         $reservas = Reserva::select("RESERVAS.*","RESTAURANTES.NOMBRE as nombreRestaurante")
-        ->join("RESTAURANTES","RESTAURANTES.ID_RESTAURANTE","=","RESTAURANTES_ID_RESTAURANTE")
+        ->join("RESTAURANTES","RESTAURANTES.ID_RESTAURANTE","=","RESERVAS.ID_RESTAURANTE")
         ->get();
         return view("reservas.index", compact("restaurantes", "reservas"));
     }
@@ -25,7 +25,7 @@ class ReservaController extends Controller
                 "MESA" => $input["mesa"],
                 "FECHA_RESERVA" => $input["fecha"],
                 "NOMBRE_RESERVA" => $input["nombre"],
-                "RESTAURANTES_ID_RESTAURANTE" => $input["idRestaurante"],
+                "ID_RESTAURANTE" => $input["idRestaurante"],
             ]);
             DB::commit();
             return redirect("/reservas")->with('status', 'Se realizó la reserva correctamente');
@@ -56,7 +56,7 @@ class ReservaController extends Controller
                 "MESA" => $input["mesa"],
                 "FECHA_RESERVA" => $input["fecha"],
                 "NOMBRE_RESERVA" => $input["nombre"],
-                "RESTAURANTES_ID_RESTAURANTE" => $input["idRestaurante"],
+                "ID_RESTAURANTE" => $input["idRestaurante"],
             ]);
             return redirect("/reservas")->with('status', 'Se modifico la reserva correctamente');
         } catch (\Exeption $e) {

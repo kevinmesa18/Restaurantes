@@ -1,6 +1,13 @@
 body{
     width: 100vw;
     height: 100vh;
-    background: rgb(74,175,244);
-    background: radial-gradient(circle, rgba(74,175,244,1) 32%, rgba(74,78,244,1) 100%);
+    background: rgb(86, 86, 86);
+    background: radial-gradient(circle, rgb(118, 118, 118) 32%, rgb(43, 43, 43) 100%);
+}
+
+.select2 {
+    width: 100% !important;
+}
+.select2-selection {
+    height: calc(1.5em + .75em + 2px) !important;
 }
