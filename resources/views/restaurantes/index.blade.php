@@ -23,14 +23,24 @@
     <br>
     <div class="row">
         @foreach($restaurantes as $restaurante)
-            <div class="col-sm-4">
-                <img class="card-img-top rounded-circle" width="100" height="200" src="{{$restaurante->URL_FOTO}}" alt="{{$restaurante->NOMBRE}}">
-                <div class="card-body text-center">
-                    <h4 class="card-title">{{$restaurante->NOMBRE}}</h4>
-                    <p class="card-text">{{$restaurante->DESCRIPCION}}</p>
-                    <p class="card-text">{{$restaurante->CIUDAD}}</p>
-                    <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEdit" onclick="enviarId({{$restaurante->ID_RESTAURANTE}})"><i class="fas fa-pencil-alt"></i></a>
-                    <a class="btn btn-sm btn-danger" href="/restaurantes/borrar?id={{$restaurante->ID_RESTAURANTE}}"><i class="fas fa-window-close"></i></a>
+            <div class="col-sm-3 mt-3">
+                <div class="card bg-info text-center">
+                    <div class="text-center">
+                        <img class="rounded-circle" width="100" height="100" src="{{$restaurante->URL_FOTO}}" alt="{{$restaurante->NOMBRE}}">
+                    </div>
+                    <h4 class="card-header text-white">
+                        <span class="text-warning float-left" data-toggle="modal" data-target="#modalEdit" onclick="enviarId({{$restaurante->ID_RESTAURANTE}})"><i class="fas fa-pencil-alt"></i></span>
+                        {{$restaurante->NOMBRE}}
+                        <span class="text-danger float-right" href="/restaurantes/borrar?id={{$restaurante->ID_RESTAURANTE}}"><i class="fas fa-eraser"></i></span>
+                    </h4>
+                    <div class="card-body text-center">
+                        <p class="card-text text-white">
+                            Categoria: {{$restaurante->DESCRIPCION}} <br>
+                            Ciudad: {{$restaurante->CIUDAD}} <br>
+                            Cantidad de mesas: {{$restaurante->CANTIDAD_MESAS}} <br>
+                            Mesas reservadas: 
+                        </p>
+                    </div>
                 </div>
             </div>
         @endforeach
