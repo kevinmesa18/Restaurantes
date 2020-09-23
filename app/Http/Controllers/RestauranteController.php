@@ -19,11 +19,11 @@ class RestauranteController extends Controller
         try {
             DB::beginTransaction();
             $restaurante = Restaurante::create([
-                "NOMBRE" => $input["nombre"],
-                "DESCRIPCION" => $input["descripcion"],
-                "CIUDAD" => $input["ciudad"],
-                "URL_FOTO" => $input["urlfoto"],
-                "CANTIDAD_MESAS" => $input["cantidadmesas"],
+                "nombre" => $input["nombre"],
+                "descripcion" => $input["descripcion"],
+                "ciudad" => $input["ciudad"],
+                "foto" => $input["urlfoto"],
+                "cantidad_mesas" => $input["cantidadmesas"],
             ]);
             DB::commit();
             return redirect("/restaurantes")->with('status', 'Se agrego el restaurante correctamente');
@@ -36,8 +36,8 @@ class RestauranteController extends Controller
     public function delete(Request $request){
         $id = $request->input("id");
         try {
-            DB::delete('DELETE FROM RESERVAS WHERE RESTAURANTES_ID_RESTAURANTE = ?', [$id]);
-            DB::delete('DELETE FROM RESTAURANTES WHERE ID_RESTAURANTE=?',[$id]);
+            DB::delete('DELETE FROM reservas WHERE id_restaurante = ?', [$id]);
+            DB::delete('DELETE FROM restaurantes WHERE id_restaurante=?',[$id]);
             DB::commit();
             return redirect("/restaurantes")->with('status', 'Se elimino el restaurante y sus reservas correctamente');
         } catch (\Exception $e) {
@@ -49,13 +49,13 @@ class RestauranteController extends Controller
     public function modify(Request $request){
         $input = $request -> all();
         try {
-            DB::table('RESTAURANTES')
-            ->where("ID_RESTAURANTE",$input["idRestaurante"])
+            DB::table('restaurantes')
+            ->where("id",$input["idRestaurante"])
             ->update([
-                "NOMBRE" => $input["nombre"],
-                "DESCRIPCION" => $input["descripcion"],
-                "CIUDAD" => $input["ciudad"],
-                "URL_FOTO" => $input["urlfoto"],
+                "nombre" => $input["nombre"],
+                "descripcion" => $input["descripcion"],
+                "ciudad" => $input["ciudad"],
+                "foto" => $input["urlfoto"],
             ]);
             return redirect("/restaurantes")->with('status', 'Se modifico el restaurante correctamente');
         } catch (\Exeption $e) {

@@ -11,9 +11,7 @@ class ReservaController extends Controller
 {
     public function index(){
         $restaurantes = Restaurante::all();
-        $reservas = Reserva::select("RESERVAS.*","RESTAURANTES.NOMBRE as nombreRestaurante")
-        ->join("RESTAURANTES","RESTAURANTES.ID_RESTAURANTE","=","RESERVAS.ID_RESTAURANTE")
-        ->get();
+        $reservas = Reserva::with('restaurante')->get();
         return view("reservas.index", compact("restaurantes", "reservas"));
     }
 
@@ -22,10 +20,10 @@ class ReservaController extends Controller
         try {
             DB::beginTransaction();
             $reserva = Reserva::create([
-                "MESA" => $input["mesa"],
-                "FECHA_RESERVA" => $input["fecha"],
-                "NOMBRE_RESERVA" => $input["nombre"],
-                "ID_RESTAURANTE" => $input["idRestaurante"],
+                "numero_mesa" => $input["mesa"],
+                "fecha_reserva" => $input["fecha"],
+                "cliente" => $input["nombre"],
+                "id_restaurante" => $input["idRestaurante"],
             ]);
             DB::commit();
             return redirect("/reservas")->with('status', 'Se realizó la reserva correctamente');
@@ -38,7 +36,7 @@ class ReservaController extends Controller
     public function delete(Request $request){
         $id = $request->input("id");
         try {
-            DB::delete('DELETE FROM RESERVAS WHERE ID_RESERVA=?',[$id]);
+            DB::delete('DELETE FROM reservas WHERE id=?',[$id]);
             DB::commit();
             return redirect("/reservas")->with('status', 'Se elimino la reserva correctamente');
         } catch (\Exception $e) {
@@ -50,13 +48,13 @@ class ReservaController extends Controller
     public function modify(Request $request){
         $input = $request -> all();
         try {
-            DB::table('RESERVAS')
-            ->where("ID_RESERVA",$input["idReserva"])
+            DB::table('reservas')
+            ->where("id",$input["idReserva"])
             ->update([
-                "MESA" => $input["mesa"],
-                "FECHA_RESERVA" => $input["fecha"],
-                "NOMBRE_RESERVA" => $input["nombre"],
-                "ID_RESTAURANTE" => $input["idRestaurante"],
+                "numero_mesa" => $input["mesa"],
+                "fecha_reserva" => $input["fecha"],
+                "cliente" => $input["nombre"],
+                "id_restaurante" => $input["idRestaurante"],
             ]);
             return redirect("/reservas")->with('status', 'Se modifico la reserva correctamente');
         } catch (\Exeption $e) {

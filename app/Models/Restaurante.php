@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Restaurante extends Model
 {
-    protected $table = 'RESTAURANTES';
-    protected $fillable=['NOMBRE', 'DESCRIPCION', 'CIUDAD', 'URL_FOTO', 'CANTIDAD_MESAS'];
+    protected $table = 'restaurantes';
+    protected $fillable=['nombre', 'descripcion', 'ciudad', 'foto', 'cantidad_mesas'];
     public $timestamps = false;
 
     public function reserva()
     {
-        return $this->hasMany(Reserva::class,'ID_RESTAURANTE');
+        return $this->hasMany(Reserva::class,'id_restaurante');
     }
 }
