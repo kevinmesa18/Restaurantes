@@ -21,35 +21,33 @@
         </div>
     </div>
     <br>
-    <div class="container bg-white">
-        <table class="table table-sm table-striped table-bordered text-center" id="">
-            <thead class="thead-dark">
+    <table class="table table-sm table-striped table-bordered text-center" id="">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Restaurante</th>
+                <th scope="col">Número de mesa</th>
+                <th scope="col">Fecha de reserva</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            @foreach($reservas as $value)
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Restaurante</th>
-                    <th scope="col">Número de mesa</th>
-                    <th scope="col">Fecha de reserva</th>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Opciones</th>
+                    <td>{{$value->id}}</td>
+                    <td>{{$value->restaurante->nombre}}</td>
+                    <td>{{$value->numero_mesa}}</td>
+                    <td>{{$value->fecha_reserva}}</td>
+                    <td>{{$value->cliente}}</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalModificar" onclick="enviarId({{$value->id}})"><i class="fas fa-pencil-alt"></i></a>
+                        <a class="btn btn-sm btn-danger" href="/reservas/borrar?id={{$value->id}}"><i class="fas fa-window-close"></i></a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($reservas as $value)
-                    <tr>
-                        <td>{{$value->id}}</td>
-                        <td>{{$value->restaurante->nombre}}</td>
-                        <td>{{$value->numero_mesa}}</td>
-                        <td>{{$value->fecha_reserva}}</td>
-                        <td>{{$value->cliente}}</td>
-                        <td>
-                            <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalModificar" onclick="enviarId({{$value->id}})"><i class="fas fa-pencil-alt"></i></a>
-                            <a class="btn btn-sm btn-danger" href="/reservas/borrar?id={{$value->id}}"><i class="fas fa-window-close"></i></a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+            @endforeach
+        </tbody>
+    </table>
     <!-- Modal create -->
     <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreate" aria-hidden="true">
         <form action="/reservas/guardar" method="post">

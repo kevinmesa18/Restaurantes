@@ -30,11 +30,11 @@
                     <div class="text-center">
                         <img class="rounded-circle" width="100" height="100" src="{{$restaurante->foto}}" alt="{{$restaurante->nombre}}">
                     </div>
-                    <h4 class="card-header text-white">
+                    <p class="card-header text-white">
                         <span class="text-warning float-left" data-toggle="modal" data-target="#modalEdit" onclick="enviarId({{$restaurante->id}})"><i class="fas fa-pencil-alt"></i></span>
                         {{$restaurante->nombre}}
                         <span class="text-danger float-right" href="/restaurantes/borrar?id={{$restaurante->id}}"><i class="fas fa-eraser"></i></span>
-                    </h4>
+                    </p>
                     <div class="card-body text-center">
                         <p class="card-text text-white">
                             Categoria: {{$restaurante->categoria->nombre}} <br>
