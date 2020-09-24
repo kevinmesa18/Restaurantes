@@ -4,26 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Restaurante;
-use App\Models\Reserva;
+use App\Models\Ciudad;
+use App\Models\Categoria;
 use DB;
 
 class RestauranteController extends Controller
 {
     public function index(){
-        $restaurantes = Restaurante::all();
-        return view("restaurantes.index", compact("restaurantes"));
+        $ciudades = Ciudad::all();
+        $categorias = Categoria::all();
+        $restaurantes = Restaurante::with('ciudad','categoria')->withCount('reserva')->get();
+        return view("restaurantes.index", compact("restaurantes","ciudades","categorias"));
     }
 
     public function save(Request $request){
-        $input = $request -> all();
         try {
             DB::beginTransaction();
             $restaurante = Restaurante::create([
-                "nombre" => $input["nombre"],
-                "descripcion" => $input["descripcion"],
-                "ciudad" => $input["ciudad"],
-                "foto" => $input["urlfoto"],
-                "cantidad_mesas" => $input["cantidadmesas"],
+                "nombre" => $request->nombre,
+                "descripcion" => $request->descripcion,
+                "id_ciudad" => $request->ciudad,
+                "id_categoria" => $request->categoria,
+                "foto" => $request->urlfoto,
+                "cantidad_mesas" => $request->cantidadmesas,
             ]);
             DB::commit();
             return redirect("/restaurantes")->with('status', 'Se agrego el restaurante correctamente');

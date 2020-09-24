@@ -37,10 +37,10 @@
                     </h4>
                     <div class="card-body text-center">
                         <p class="card-text text-white">
-                            Categoria: {{$restaurante->descripcion}} <br>
-                            Ciudad: {{$restaurante->ciudad}} <br>
+                            Categoria: {{$restaurante->categoria->nombre}} <br>
+                            Ciudad: {{$restaurante->ciudad->nombre}} <br>
                             Cantidad de mesas: {{$restaurante->cantidad_mesas}} <br>
-                            Mesas reservadas:
+                            Mesas reservadas: {{$restaurante->reserva_count}}
                         </p>
                     </div>
                 </div>
@@ -59,40 +59,49 @@
                         </div>
                     </div>
                     <div class="modal-body">
-                            <input type="hidden" name="cantidadmesas" value="15">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="nombre">Nombre</label>
-                                        <input id="nombre" type="text" class="form-control" name="nombre">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="urlfoto">URL Foto</label>
-                                        <input id="urlfoto" type="text" class="form-control" name="urlfoto">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="ciudad">Ciudad</label>
-                                        <input id="ciudad" type="text" class="form-control" name="ciudad">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="categoria">Categoria</label>
-                                        <input id="categoria" type="text" class="form-control" name="categoria">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="descripcion">Descripción</label>
-                                        <textarea id="descripcion" type="text" rows="5" class="form-control" name="descripcion">
-                                        </textarea>
-                                    </div>
+                        <input type="hidden" name="cantidadmesas" value="15">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input id="nombre" type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre" required>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="urlfoto">URL Foto</label>
+                                    <input id="urlfoto" type="text" class="form-control" name="urlfoto" placeholder="Ingrese la url" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="ciudad">Ciudad</label>
+                                    <select name="ciudad" id="ciudad" class="form-control">
+                                        <option value="">Seleccione una ciudad</option>
+                                        @foreach($ciudades as $value)
+                                            <option value="{{$value->id}}">{{$value->nombre}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="categoria">Categoria</label>
+                                    <select name="categoria" id="categoria" class="form-control">
+                                        <option value="">Seleccione una categoria</option>
+                                        @foreach($categorias as $value)
+                                            <option value="{{$value->id}}">{{$value->nombre}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="descripcion">Descripción</label>
+                                    <input id="descripcion" type="text" rows="5" class="form-control" name="descripcion" placeholder="Ingrese la descripcion" required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">
